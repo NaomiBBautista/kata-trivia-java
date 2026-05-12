@@ -66,7 +66,7 @@ public class Game implements IGame {
             System.out.println(players.get(currentPlayer)
                                + "'s new location is "
                                + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory());
+            System.out.println("The category is " + currentCategory(places[currentPlayer]));
             askQuestion();
          } else {
             System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
@@ -80,7 +80,7 @@ public class Game implements IGame {
          System.out.println(players.get(currentPlayer)
                             + "'s new location is "
                             + places[currentPlayer]);
-         System.out.println("The category is " + currentCategory());
+         System.out.println("The category is " + currentCategory(places[currentPlayer]));
          askQuestion();
       }
 
@@ -92,27 +92,23 @@ public class Game implements IGame {
    }
 
    private void askQuestion() {
-      if (currentCategory() == "Pop")
+      if (currentCategory(places[currentPlayer]) == "Pop")
          System.out.println(popQuestions.removeFirst());
-      if (currentCategory() == "Science")
+      if (currentCategory(places[currentPlayer]) == "Science")
          System.out.println(scienceQuestions.removeFirst());
-      if (currentCategory() == "Sports")
+      if (currentCategory(places[currentPlayer]) == "Sports")
          System.out.println(sportsQuestions.removeFirst());
-      if (currentCategory() == "Rock")
+      if (currentCategory(places[currentPlayer]) == "Rock")
          System.out.println(rockQuestions.removeFirst());
    }
 
 
-   private String currentCategory() {
-      if (places[currentPlayer] - 1 == 0) return "Pop";
-      if (places[currentPlayer] - 1 == 4) return "Pop";
-      if (places[currentPlayer] - 1 == 8) return "Pop";
-      if (places[currentPlayer] - 1 == 1) return "Science";
-      if (places[currentPlayer] - 1 == 5) return "Science";
-      if (places[currentPlayer] - 1 == 9) return "Science";
-      if (places[currentPlayer] - 1 == 2) return "Sports";
-      if (places[currentPlayer] - 1 == 6) return "Sports";
-      if (places[currentPlayer] - 1 == 10) return "Sports";
+   private String currentCategory(int space) {
+    // Usamos (space - 1) para mantener la lógica original del "oráculo"
+      int categoryIndex = (space - 1) % 4; 
+      if (categoryIndex == 0) return "Pop";
+      if (categoryIndex == 1) return "Science";
+      if (categoryIndex == 2) return "Sports";
       return "Rock";
    }
 
