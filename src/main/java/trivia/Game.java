@@ -67,7 +67,7 @@ public class Game implements IGame {
                                + "'s new location is "
                                + places[currentPlayer]);
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
-            askQuestion();
+            askQuestion(currentCategory(places[currentPlayer]));
          } else {
             System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
@@ -81,7 +81,7 @@ public class Game implements IGame {
                             + "'s new location is "
                             + places[currentPlayer]);
          System.out.println("The category is " + currentCategory(places[currentPlayer]));
-         askQuestion();
+         askQuestion(currentCategory(places[currentPlayer]));
       }
 
    }
@@ -91,14 +91,14 @@ public class Game implements IGame {
       if (places[currentPlayer] > BOARD_SIZE) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
    }
 
-   private void askQuestion() {
-      if (currentCategory(places[currentPlayer]) == "Pop")
+   private void askQuestion(String category) {
+      if (category.equals("Pop"))
          System.out.println(popQuestions.removeFirst());
-      if (currentCategory(places[currentPlayer]) == "Science")
+      if (category.equals("Science"))
          System.out.println(scienceQuestions.removeFirst());
-      if (currentCategory(places[currentPlayer]) == "Sports")
+      if (category.equals("Sports"))
          System.out.println(sportsQuestions.removeFirst());
-      if (currentCategory(places[currentPlayer]) == "Rock")
+      if (category.equals("Rock"))
          System.out.println(rockQuestions.removeFirst());
    }
 
