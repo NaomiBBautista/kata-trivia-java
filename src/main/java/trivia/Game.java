@@ -111,7 +111,7 @@ public class Game implements IGame {
 
 
    private String currentCategory(int space) {
-    // Usamos (space - 1) para mantener la lógica original del "oráculo"
+
       int categoryIndex = (space - 1) % 4; 
       if (categoryIndex == 0) return "Pop";
       if (categoryIndex == 1) return "Science";
@@ -120,24 +120,17 @@ public class Game implements IGame {
    }
 
    public boolean handleCorrectAnswer() {
-      // declaramos la variable obteniéndola de la lista
-      Player player = players.get(currentPlayer); 
+      Player player = players.get(currentPlayer);
 
-      if (player.isInPenaltyBox()) { 
+      if (player.isInPenaltyBox()) {
          if (isGettingOutOfPenaltyBox) {
                System.out.println("Answer was correct!!!!");
-               
-               player.setCoins(player.getCoins() + 1); 
-               
-               System.out.println(player.getName()
-                                 + " now has "
-                                 + player.getCoins()
-                                 + " Gold Coins.");
+               player.setCoins(player.getCoins() + 1);
+               System.out.println(player.getName() + " now has " + player.getCoins() + " Gold Coins.");
 
                boolean winner = !playerHasWon();
                currentPlayer++;
                if (currentPlayer == players.size()) currentPlayer = 0;
-
                return winner;
          } else {
                currentPlayer++;
@@ -145,19 +138,13 @@ public class Game implements IGame {
                return true;
          }
       } else {
-         System.out.println("Answer was correct!!!!"); 
-         
+         System.out.println("Answer was correct!!!!");
          player.setCoins(player.getCoins() + 1);
-         
-         System.out.println(player.getName()
-                              + " now has "
-                              + player.getCoins()
-                              + " Gold Coins.");
+         System.out.println(player.getName() + " now has " + player.getCoins() + " Gold Coins.");
 
          boolean winner = !playerHasWon();
          currentPlayer++;
          if (currentPlayer == players.size()) currentPlayer = 0;
-
          return winner;
       }
    }
