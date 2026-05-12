@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 // REFACTOR ME
 public class Game implements IGame {
+   private static final int INITIAL_QUESTIONS_COUNT = 50;
    private static final int WINNING_COINS = 6;
    private static final int BOARD_SIZE = 12;
    ArrayList players = new ArrayList();
@@ -21,7 +22,7 @@ public class Game implements IGame {
    boolean isGettingOutOfPenaltyBox;
 
    public Game() {
-      for (int i = 0; i < 50; i++) {
+      for (int i = 0; i < INITIAL_QUESTIONS_COUNT; i++) {
          popQuestions.addLast("Pop Question " + i);
          scienceQuestions.addLast(("Science Question " + i));
          sportsQuestions.addLast(("Sports Question " + i));
