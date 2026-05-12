@@ -123,7 +123,7 @@ public class Game implements IGame {
                                + playerCoins[currentPlayer]
                                + " Gold Coins.");
 
-            boolean winner = didPlayerWin();
+            boolean winner = !playerHasWon();
             currentPlayer++;
             if (currentPlayer == players.size()) currentPlayer = 0;
 
@@ -144,7 +144,7 @@ public class Game implements IGame {
                             + playerCoins[currentPlayer]
                             + " Gold Coins.");
 
-         boolean winner = didPlayerWin();
+         boolean winner = !playerHasWon();
          currentPlayer++;
          if (currentPlayer == players.size()) currentPlayer = 0;
 
@@ -163,7 +163,7 @@ public class Game implements IGame {
    }
 
 
-   private boolean didPlayerWin() {
-      return !(playerCoins[currentPlayer] == WINNING_COINS);
+   private boolean playerHasWon() { 
+      return playerCoins[currentPlayer] == WINNING_COINS; 
    }
 }
