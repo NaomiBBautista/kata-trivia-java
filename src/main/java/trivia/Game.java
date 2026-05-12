@@ -8,7 +8,7 @@ public class Game implements IGame {
    private static final int INITIAL_QUESTIONS_COUNT = 50;
    private static final int WINNING_COINS = 6;
    private static final int BOARD_SIZE = 12;
-   ArrayList players = new ArrayList();
+   ArrayList<Player> players = new ArrayList<>();
    int[] currentPlayerPosition = new int[6];
    int[] playerCoins = new int[6];
    boolean[] currentPlayerInPenaltyBox = new boolean[6];
@@ -42,7 +42,10 @@ public class Game implements IGame {
       currentPlayerPosition[howManyPlayers()] = 1;
       playerCoins[howManyPlayers()] = 0;
       currentPlayerInPenaltyBox[howManyPlayers()] = false;
-      players.add(playerName);
+      
+      Player newPlayer = new Player(playerName);
+      newPlayer.setPosition(1); // <--- IMPORTANTE: Debe empezar en 1, no en 0
+      players.add(newPlayer);
 
       System.out.println(playerName + " was added");
       System.out.println("They are player number " + players.size());
@@ -66,9 +69,9 @@ public class Game implements IGame {
 
             System.out.println(players.get(currentPlayer)
                                + "'s new location is "
-                               + currentPlayerPosition[currentPlayer]);
-            System.out.println("The category is " + currentCategory(currentPlayerPosition[currentPlayer]));
-            askQuestion(currentCategory(currentPlayerPosition[currentPlayer]));
+                               + players.get(currentPlayer).getPosition());
+            System.out.println("The category is " + currentCategory(players.get(currentPlayer).getPosition()));
+            askQuestion(currentCategory(players.get(currentPlayer).getPosition()));
          } else {
             System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
@@ -80,16 +83,27 @@ public class Game implements IGame {
 
          System.out.println(players.get(currentPlayer)
                             + "'s new location is "
-                            + currentPlayerPosition[currentPlayer]);
-         System.out.println("The category is " + currentCategory(currentPlayerPosition[currentPlayer]));
-         askQuestion(currentCategory(currentPlayerPosition[currentPlayer]));
+                            + players.get(currentPlayer).getPosition());
+         System.out.println("The category is " + currentCategory(players.get(currentPlayer).getPosition()));
+         askQuestion(currentCategory(players.get(currentPlayer).getPosition()));
       }
 
    }
 
    private void movePlayer(int roll) {
-      currentPlayerPosition[currentPlayer] = currentPlayerPosition[currentPlayer] + roll;
-      if (currentPlayerPosition[currentPlayer] > BOARD_SIZE) currentPlayerPosition[currentPlayer] = currentPlayerPosition[currentPlayer] - BOARD_SIZE;
+      Player player = players.get(currentPlayer);
+      
+      // Calculamos la nueva posición (1-based index)
+      int newPosition = player.getPosition() + roll;
+      
+      if (newPosition > BOARD_SIZE) {
+         newPosition -= BOARD_SIZE;
+      }
+      
+      player.setPosition(newPosition);
+      
+      // Sincronizamos con el array viejo (para que los prints que aún lo usan no fallen)
+      currentPlayerPosition[currentPlayer] = newPosition;
    }
 
    private void askQuestion(String category) {
